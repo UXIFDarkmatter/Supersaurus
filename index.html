@@ -21,12 +21,16 @@
     </nav>
   </header>
 
-  <section class="hero" aria-label="Hero">
+  <section class="hero" id="hero" aria-label="Hero">
     <img
       src="images/original_composition_small.jpg"
       alt="Supersaurus hero composition"
       class="hero-image"
+      id="heroImage"
     />
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
   </section>
+
+  <script src="hero-parallax.js"></script>
 </body>
 </html>
