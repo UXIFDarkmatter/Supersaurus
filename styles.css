@@ -128,8 +128,9 @@ body {
 .hero-rays {
   position: absolute;
   left: 50%;
-  top: 30%;
-  width: 70%;
+  top: 29%;
+  width: 36%;
+  max-width: 560px;
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -138,16 +139,16 @@ body {
   -webkit-mask-image: radial-gradient(
     circle,
     transparent 0%,
-    black 12%,
-    black 38%,
-    transparent 78%
+    black 18%,
+    black 45%,
+    transparent 82%
   );
   mask-image: radial-gradient(
     circle,
     transparent 0%,
-    black 12%,
-    black 38%,
-    transparent 78%
+    black 18%,
+    black 45%,
+    transparent 82%
   );
 }
 
@@ -155,34 +156,31 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  filter: blur(0.5px);
 }
 
 .hero-rays-a {
   background: repeating-conic-gradient(
     from 0deg,
     transparent 0deg,
-    transparent 6deg,
-    rgba(255, 225, 170, 0.35) 7deg,
-    rgba(255, 235, 190, 0.55) 8deg,
-    rgba(255, 225, 170, 0.35) 9deg,
-    transparent 10deg
+    transparent 8.4deg,
+    rgba(255, 235, 185, 0.5) 8.7deg,
+    rgba(255, 235, 185, 0.5) 9.3deg,
+    transparent 9.6deg
   );
-  animation: hero-rays-spin-a 80s linear infinite;
+  animation: hero-rays-spin-a 90s linear infinite;
 }
 
 .hero-rays-b {
   background: repeating-conic-gradient(
-    from 3deg,
+    from 4deg,
     transparent 0deg,
-    transparent 11deg,
-    rgba(255, 240, 210, 0.3) 12deg,
-    rgba(255, 245, 220, 0.45) 13deg,
-    transparent 14deg,
-    transparent 22deg
+    transparent 17.5deg,
+    rgba(255, 245, 215, 0.4) 17.8deg,
+    rgba(255, 245, 215, 0.4) 18.2deg,
+    transparent 18.5deg
   );
-  animation: hero-rays-spin-b 140s linear infinite reverse;
-  opacity: 0.85;
+  animation: hero-rays-spin-b 160s linear infinite reverse;
+  opacity: 0.9;
 }
 
 @keyframes hero-rays-spin-a {
