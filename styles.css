@@ -113,6 +113,7 @@ body {
   width: 100%;
   height: auto;
   object-fit: cover;
+  visibility: hidden;
 }
 
 .hero-canvas {
@@ -130,13 +131,15 @@ body {
   animation: hero-bg-reveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.hero.fallback-mode .hero-image {
+  visibility: visible;
+  transform-origin: center;
+  animation: hero-bg-reveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes hero-bg-reveal {
   0%   { opacity: 0; transform: scale(1.1); }
   100% { opacity: 1; transform: scale(1); }
-}
-
-.hero.parallax-active .hero-image {
-  visibility: hidden;
 }
 
 .ember-canvas {
@@ -313,6 +316,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .hero,
   .hero.parallax-active .hero-canvas,
+  .hero.fallback-mode .hero-image,
   .ember-canvas,
   .hero-rays,
   .hero-logo,

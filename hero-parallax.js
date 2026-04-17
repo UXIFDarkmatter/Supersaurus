@@ -10,10 +10,18 @@
   const imgEl = document.getElementById("heroImage");
   if (!hero || !canvas || !imgEl) return;
 
-  const gl =
-    canvas.getContext("webgl", { antialias: true, premultipliedAlpha: false }) ||
-    canvas.getContext("experimental-webgl");
-  if (!gl) return;
+  let gl = null;
+  try {
+    gl =
+      canvas.getContext("webgl", { antialias: true, premultipliedAlpha: false }) ||
+      canvas.getContext("experimental-webgl");
+  } catch (e) {
+    gl = null;
+  }
+  if (!gl) {
+    hero.classList.add("fallback-mode");
+    return;
+  }
 
   const vertSrc = `
     attribute vec2 aPos;
@@ -196,5 +204,6 @@
     })
     .catch((err) => {
       console.warn("Depth parallax disabled:", err);
+      hero.classList.add("fallback-mode");
     });
 })();
