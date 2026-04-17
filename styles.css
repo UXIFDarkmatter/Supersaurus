@@ -125,16 +125,26 @@ body {
   mix-blend-mode: screen;
 }
 
+.hero-logo-wrap {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  width: 34%;
+  max-width: 520px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
 .hero-rays {
   position: absolute;
   left: 50%;
-  top: 29%;
-  width: 36%;
-  max-width: 560px;
+  top: 50%;
+  width: 150%;
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 2;
+  z-index: 1;
   mix-blend-mode: screen;
   -webkit-mask-image: radial-gradient(
     circle,
@@ -194,23 +204,17 @@ body {
 }
 
 .hero-logo {
-  position: absolute;
-  top: 8%;
-  left: 50%;
-  width: 34%;
-  max-width: 520px;
+  position: relative;
+  display: block;
+  width: 100%;
   height: auto;
-  transform: translate(-50%, 0);
-  pointer-events: none;
-  will-change: transform;
+  z-index: 2;
   filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
-  z-index: 3;
 }
 
 @media (max-width: 640px) {
-  .hero-logo {
+  .hero-logo-wrap {
     width: 58%;
-    top: 6%;
   }
 }
 
