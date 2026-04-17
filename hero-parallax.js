@@ -33,24 +33,30 @@
     uniform sampler2D uBg;
     uniform vec2 uMouse;
     uniform float uStrength;
+    uniform float uMode;
     void main() {
       vec2 shift = uMouse * uStrength;
+      vec3 col;
 
-      // Iteratively find the source UV (two refinement steps)
-      float d = texture2D(uDepth, vUv).r;
-      vec2 uv = vUv + shift * (d - 0.5);
-      d = texture2D(uDepth, uv).r;
-      uv = vUv + shift * (d - 0.5);
-      float dFinal = texture2D(uDepth, uv).r;
+      if (uMode < 0.5) {
+        float d = texture2D(uDepth, vUv).r;
+        vec2 uv = clamp(vUv + shift * (d - 0.5), 0.0, 1.0);
+        col = texture2D(uColor, uv).rgb;
+      } else {
+        float d = texture2D(uDepth, vUv).r;
+        vec2 uv = vUv + shift * (d - 0.5);
+        d = texture2D(uDepth, uv).r;
+        uv = vUv + shift * (d - 0.5);
+        float dFinal = texture2D(uDepth, uv).r;
 
-      vec2 fgUv = clamp(uv, 0.0, 1.0);
-      vec2 bgUv = clamp(vUv - shift * 0.2, 0.0, 1.0);
+        vec2 fgUv = clamp(uv, 0.0, 1.0);
+        vec2 bgUv = clamp(vUv - shift * 0.2, 0.0, 1.0);
 
-      vec3 fg = texture2D(uColor, fgUv).rgb;
-      vec3 bg = texture2D(uBg, bgUv).rgb;
-
-      float alpha = smoothstep(0.30, 0.48, dFinal);
-      vec3 col = mix(bg, fg, alpha);
+        vec3 fg = texture2D(uColor, fgUv).rgb;
+        vec3 bg = texture2D(uBg, bgUv).rgb;
+        float alpha = smoothstep(0.30, 0.48, dFinal);
+        col = mix(bg, fg, alpha);
+      }
       gl_FragColor = vec4(col, 1.0);
     }
   `;
@@ -86,6 +92,16 @@
   const bgLoc = gl.getUniformLocation(prog, "uBg");
   const mouseLoc = gl.getUniformLocation(prog, "uMouse");
   const strengthLoc = gl.getUniformLocation(prog, "uStrength");
+  const modeLoc = gl.getUniformLocation(prog, "uMode");
+
+  const params = new URLSearchParams(window.location.search);
+  let mode = params.get("parallax") === "simple" ? 0 : 1;
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "v" || e.key === "V") {
+      mode = mode === 1 ? 0 : 1;
+      console.log("Parallax mode:", mode === 1 ? "inpainted (v2)" : "simple (v1)");
+    }
+  });
 
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -163,6 +179,7 @@
     gl.uniform1i(bgLoc, 2);
     gl.uniform2f(mouseLoc, current.x, current.y);
     gl.uniform1f(strengthLoc, STRENGTH);
+    gl.uniform1f(modeLoc, mode);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     requestAnimationFrame(render);
   }
