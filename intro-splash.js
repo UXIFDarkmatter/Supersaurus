@@ -1,6 +1,6 @@
 (() => {
   const GIF_DURATION = 2540;
-  const FLY_DURATION = 650;
+  const FLY_DURATION = 1100;
   const LAST_FRAME_SRC = "images/supersaurus_last.png";
 
   const splash = document.getElementById("introSplash");
@@ -31,8 +31,8 @@
     splash.style.top = startY + "px";
     splash.style.left = startX + "px";
 
-    const peakX = startX + (endX - startX) * 0.55;
-    const peakY = Math.min(startY, endY) - 70;
+    const peakX = startX + (endX - startX) * 0.5;
+    const peakY = Math.min(startY, endY) - 120;
     const startSize = 300;
     const peakSize = 180;
 
