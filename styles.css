@@ -125,6 +125,27 @@ body {
   mix-blend-mode: screen;
 }
 
+.hero-logo {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 34%;
+  max-width: 520px;
+  height: auto;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  will-change: transform;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+  z-index: 3;
+}
+
+@media (max-width: 640px) {
+  .hero-logo {
+    width: 58%;
+    top: 6%;
+  }
+}
+
 @media (max-width: 480px) {
   :root {
     --bar-height: 56px;

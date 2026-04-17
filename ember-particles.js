@@ -1,13 +1,13 @@
 (() => {
   const COUNT = 80;
   const HUE_SPEED = 8;
-  const RISE_MIN = 8;
-  const RISE_MAX = 22;
+  const RISE_MIN = 18;
+  const RISE_MAX = 45;
   const DRIFT = 14;
   const SIZE_MIN = 1.5;
   const SIZE_MAX = 4.0;
-  const LIFE_MIN = 6;
-  const LIFE_MAX = 14;
+  const LIFE_MIN = 10;
+  const LIFE_MAX = 22;
 
   const hero = document.getElementById("hero");
   const canvas = document.getElementById("emberCanvas");

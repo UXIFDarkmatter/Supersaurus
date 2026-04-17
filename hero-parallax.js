@@ -7,6 +7,8 @@
   const hero = document.getElementById("hero");
   const canvas = document.getElementById("heroCanvas");
   const imgEl = document.getElementById("heroImage");
+  const logoEl = document.getElementById("heroLogo");
+  const LOGO_SHIFT = 22;
   if (!hero || !canvas || !imgEl) return;
 
   const gl =
@@ -147,6 +149,11 @@
     gl.uniform2f(mouseLoc, current.x, current.y);
     gl.uniform1f(strengthLoc, STRENGTH);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    if (logoEl) {
+      const lx = -current.x * LOGO_SHIFT;
+      const ly = -current.y * LOGO_SHIFT * 0.6;
+      logoEl.style.transform = `translate(calc(-50% + ${lx}px), ${ly}px)`;
+    }
     requestAnimationFrame(render);
   }
 
