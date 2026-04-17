@@ -1,7 +1,7 @@
 (() => {
   const COLOR_SRC = "images/original_composition_small.jpg";
   const DEPTH_SRC = "images/original_composition_small_depth.jpg";
-  const STRENGTH = 0.035;
+  const STRENGTH = 0.015;
   const LERP = 0.08;
 
   const hero = document.getElementById("hero");
