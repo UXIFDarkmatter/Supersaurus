@@ -5,16 +5,11 @@
 
   const splash = document.getElementById("introSplash");
   const gif = document.getElementById("introGif");
-  const logoCircle = document.querySelector(".logo-circle");
-  if (!splash || !gif || !logoCircle) return;
+  if (!splash || !gif) return;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduced) {
     splash.classList.add("done");
-    logoCircle.style.backgroundImage = `url(${LAST_FRAME_SRC})`;
-    logoCircle.style.backgroundSize = "cover";
-    logoCircle.style.backgroundPosition = "center";
-    logoCircle.style.borderColor = "transparent";
     return;
   }
 
@@ -23,9 +18,9 @@
 
     const startX = window.innerWidth / 2;
     const startY = window.innerHeight / 2;
-    const rect = logoCircle.getBoundingClientRect();
-    const endX = rect.left + rect.width / 2;
-    const endY = rect.top + rect.height / 2;
+    const endSize = 32;
+    const endX = 40;
+    const endY = 40;
 
     splash.classList.add("flying");
     splash.style.top = startY + "px";
@@ -56,8 +51,8 @@
         {
           top: endY + "px",
           left: endX + "px",
-          width: rect.width + "px",
-          height: rect.height + "px",
+          width: endSize + "px",
+          height: endSize + "px",
         },
       ],
       { duration: FLY_DURATION, fill: "forwards" }
@@ -67,25 +62,7 @@
   }, GIF_DURATION);
 
   function impact(x, y) {
-    logoCircle.style.backgroundImage = `url(${LAST_FRAME_SRC})`;
-    logoCircle.style.backgroundSize = "cover";
-    logoCircle.style.backgroundPosition = "center";
-    logoCircle.style.borderColor = "transparent";
     splash.classList.add("done");
-
-    logoCircle.animate(
-      [
-        { transform: "scale(1)", filter: "brightness(1)" },
-        {
-          transform: "scale(1.35)",
-          filter: "brightness(1.8)",
-          offset: 0.25,
-        },
-        { transform: "scale(0.92)", offset: 0.55 },
-        { transform: "scale(1)", filter: "brightness(1)" },
-      ],
-      { duration: 450, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
-    );
 
     const blip = document.createElement("div");
     blip.style.cssText = [
