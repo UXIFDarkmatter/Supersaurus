@@ -1,6 +1,7 @@
 (() => {
   const COLOR_SRC = "images/original_composition_small.jpg";
   const DEPTH_SRC = "images/original_composition_small_depth.jpg";
+  const BG_SRC = "images/original_composition_small_bg.jpg";
   const STRENGTH = 0.015;
   const LERP = 0.08;
 
@@ -29,13 +30,27 @@
     varying vec2 vUv;
     uniform sampler2D uColor;
     uniform sampler2D uDepth;
+    uniform sampler2D uBg;
     uniform vec2 uMouse;
     uniform float uStrength;
     void main() {
+      vec2 shift = uMouse * uStrength;
+
+      // Iteratively find the source UV (two refinement steps)
       float d = texture2D(uDepth, vUv).r;
-      vec2 offset = uMouse * uStrength * (d - 0.5);
-      vec2 uv = clamp(vUv + offset, 0.0, 1.0);
-      vec3 col = texture2D(uColor, uv).rgb;
+      vec2 uv = vUv + shift * (d - 0.5);
+      d = texture2D(uDepth, uv).r;
+      uv = vUv + shift * (d - 0.5);
+      float dFinal = texture2D(uDepth, uv).r;
+
+      vec2 fgUv = clamp(uv, 0.0, 1.0);
+      vec2 bgUv = clamp(vUv - shift * 0.2, 0.0, 1.0);
+
+      vec3 fg = texture2D(uColor, fgUv).rgb;
+      vec3 bg = texture2D(uBg, bgUv).rgb;
+
+      float alpha = smoothstep(0.30, 0.48, dFinal);
+      vec3 col = mix(bg, fg, alpha);
       gl_FragColor = vec4(col, 1.0);
     }
   `;
@@ -68,6 +83,7 @@
   const posLoc = gl.getAttribLocation(prog, "aPos");
   const colorLoc = gl.getUniformLocation(prog, "uColor");
   const depthLoc = gl.getUniformLocation(prog, "uDepth");
+  const bgLoc = gl.getUniformLocation(prog, "uBg");
   const mouseLoc = gl.getUniformLocation(prog, "uMouse");
   const strengthLoc = gl.getUniformLocation(prog, "uStrength");
 
@@ -144,13 +160,14 @@
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.uniform1i(colorLoc, 0);
     gl.uniform1i(depthLoc, 1);
+    gl.uniform1i(bgLoc, 2);
     gl.uniform2f(mouseLoc, current.x, current.y);
     gl.uniform1f(strengthLoc, STRENGTH);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     requestAnimationFrame(render);
   }
 
-  Promise.all([loadTex(COLOR_SRC, 0), loadTex(DEPTH_SRC, 1)])
+  Promise.all([loadTex(COLOR_SRC, 0), loadTex(DEPTH_SRC, 1), loadTex(BG_SRC, 2)])
     .then(([color]) => {
       imgAspect = color.img.naturalWidth / color.img.naturalHeight;
       resize();
