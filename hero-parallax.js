@@ -95,7 +95,7 @@
   const modeLoc = gl.getUniformLocation(prog, "uMode");
 
   const params = new URLSearchParams(window.location.search);
-  let mode = params.get("parallax") === "simple" ? 0 : 1;
+  let mode = params.get("parallax") === "inpainted" ? 1 : 0;
   window.addEventListener("keydown", (e) => {
     if (e.key === "v" || e.key === "V") {
       mode = mode === 1 ? 0 : 1;
