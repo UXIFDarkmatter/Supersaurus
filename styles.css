@@ -125,6 +125,76 @@ body {
   mix-blend-mode: screen;
 }
 
+.hero-rays {
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  width: 70%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    circle,
+    transparent 0%,
+    black 12%,
+    black 38%,
+    transparent 78%
+  );
+  mask-image: radial-gradient(
+    circle,
+    transparent 0%,
+    black 12%,
+    black 38%,
+    transparent 78%
+  );
+}
+
+.hero-rays-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+.hero-rays-a {
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 6deg,
+    rgba(255, 225, 170, 0.35) 7deg,
+    rgba(255, 235, 190, 0.55) 8deg,
+    rgba(255, 225, 170, 0.35) 9deg,
+    transparent 10deg
+  );
+  animation: hero-rays-spin-a 80s linear infinite;
+}
+
+.hero-rays-b {
+  background: repeating-conic-gradient(
+    from 3deg,
+    transparent 0deg,
+    transparent 11deg,
+    rgba(255, 240, 210, 0.3) 12deg,
+    rgba(255, 245, 220, 0.45) 13deg,
+    transparent 14deg,
+    transparent 22deg
+  );
+  animation: hero-rays-spin-b 140s linear infinite reverse;
+  opacity: 0.85;
+}
+
+@keyframes hero-rays-spin-a {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes hero-rays-spin-b {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
 .hero-logo {
   position: absolute;
   top: 8%;
