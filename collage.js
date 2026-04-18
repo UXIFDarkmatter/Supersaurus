@@ -17,12 +17,12 @@
     { src: N + "image_18.jpg",        left: 85,  top: 80,  width: 16, rot: -4, z: 3 },
 
     // TOP band (3)
-    { src: N + "image_13.jpg",        left: 22,  top: -14, width: 13, rot: -3, z: 1 },
+    { src: N + "image_13.jpg",        left: 22,  top: -4,  width: 13, rot: -3, z: 1 },
     { src: N + "image_16.jpg",        left: 43,  top: -17, width: 15, rot: 4,  z: 1, clip: "polygon(0 0, 100% 0, 100% 78%, 65% 100%, 30% 92%, 0 80%)" },
     { src: N + "image_17.jpg",        left: 65,  top: -12, width: 13, rot: -2, z: 1 },
 
     // BOTTOM band (3)
-    { src: N + "20220615_215346.jpg", left: 24,  top: 86,  width: 15, rot: 5,  z: 1 },
+    { src: N + "20220615_215346.jpg", left: 24,  top: 78,  width: 15, rot: 5,  z: 1 },
     { src: N + "image_19.jpg",        left: 46,  top: 90,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
     { src: N + "20220615_215358.jpg", left: 66,  top: 84,  width: 15, rot: 3,  z: 1 },
   ];
@@ -49,7 +49,7 @@
   const canvas = document.getElementById("filmGrain");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
-  const SIZE = 384; // source canvas size; CSS scales to fill viewport
+  const SIZE = 1024; // source canvas size; CSS scales to fill viewport (finer grain)
   canvas.width = SIZE;
   canvas.height = SIZE;
 
