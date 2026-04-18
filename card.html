@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supersaurus — Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .people-slot {
+      position: relative;
+      width: 100%;
+    }
+    .people-tile {
+      position: relative;
+      overflow: hidden;
+      background: #ffffff;
+      border: clamp(7px, 0.8vw, 12px) solid #ffffff;
+      border-radius: 18px;
+      aspect-ratio: 3 / 4; /* JS overrides with actual image aspect on load */
+      width: 100%;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.18),
+        0 14px 32px rgba(20, 10, 4, 0.28);
+    }
+    .people-tile canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .people-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 28%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(8px, 0.9vw, 14px) clamp(10px, 1.1vw, 16px);
+      text-align: center;
+      color: #ffffff;
+      pointer-events: none;
+      z-index: 6;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.35) 55%,
+        rgba(0, 0, 0, 0.82) 100%
+      );
+      border-bottom-left-radius: 18px;
+      border-bottom-right-radius: 18px;
+      opacity: 0;
+      animation: caption-in 0.55s ease-out forwards;
+      animation-delay: 750ms;
+    }
+    @keyframes caption-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .people-name {
+      font-family: "Permanent Marker", "Comic Sans MS", cursive;
+      font-size: clamp(14px, 1.8vw, 26px);
+      line-height: 1;
+      letter-spacing: 0.02em;
+      margin: 0 0 4px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .people-title {
+      font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(9px, 0.95vw, 14px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 0;
+      opacity: 0.92;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="people-slot" id="cardSlot"></div>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    }
+  </script>
+  <script type="module" src="card.js"></script>
+</body>
+</html>

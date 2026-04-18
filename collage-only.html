@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supersaurus — Collage Background</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #f4eee2;
+      overflow: hidden;
+      height: 100%;
+      width: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .collage-bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .collage-img {
+      position: absolute;
+      object-fit: cover;
+      box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.18),
+        0 8px 22px rgba(40, 25, 10, 0.25);
+      filter: sepia(0.18) saturate(1.05) contrast(1.02);
+      background: #fff;
+      padding: 4px 4px 14px 4px;
+    }
+    .collage-vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(
+        ellipse at center,
+        transparent 45%,
+        rgba(30, 20, 10, 0.25) 100%
+      );
+    }
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+      opacity: 0.42;
+      z-index: 3;
+    }
+  </style>
+</head>
+<body>
+  <div class="collage-bg" id="collageBg" aria-hidden="true"></div>
+  <canvas class="film-grain" id="filmGrain" aria-hidden="true"></canvas>
+  <div class="collage-vignette" aria-hidden="true"></div>
+
+  <script src="collage.js"></script>
+</body>
+</html>
