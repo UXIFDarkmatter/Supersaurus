@@ -5,6 +5,7 @@ const BLOOM_DURATION_MS = 1100;
 const DEPTH_DISPLACEMENT = 0.22;
 const POINTER_RANGE = 0.38;
 const GRID_SEGMENTS = 160;
+const CROP_INSET = 0.09; // fraction trimmed from each edge to hide the sketch frame/paper
 
 const tiles = [];
 const loader = new THREE.TextureLoader();
@@ -93,6 +94,7 @@ function createTile(tileEl) {
           uColor: { value: colorTex },
           uDepth: { value: depthTex },
           uDisplacement: { value: DEPTH_DISPLACEMENT },
+          uCropInset: { value: CROP_INSET },
           uProgress: { value: 0 },
           uBloomCenter: { value: new THREE.Vector2(0.5 + (Math.random() - 0.5) * 0.3, 0.55 + (Math.random() - 0.5) * 0.2) },
           uSeed: { value: Math.random() * 100 },
@@ -100,10 +102,14 @@ function createTile(tileEl) {
         vertexShader: /* glsl */ `
           uniform sampler2D uDepth;
           uniform float uDisplacement;
+          uniform float uCropInset;
           varying vec2 vUv;
+          varying vec2 vTileUv;
           void main() {
-            vUv = uv;
-            float d = texture2D(uDepth, uv).r;
+            vTileUv = uv;
+            float s = 1.0 - 2.0 * uCropInset;
+            vUv = (uv - 0.5) * s + 0.5;
+            float d = texture2D(uDepth, vUv).r;
             vec3 pos = position + vec3(0.0, 0.0, d * uDisplacement);
             gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
           }
@@ -114,6 +120,7 @@ function createTile(tileEl) {
           uniform vec2 uBloomCenter;
           uniform float uSeed;
           varying vec2 vUv;
+          varying vec2 vTileUv;
 
           float hash(vec2 p) {
             p = fract(p * vec2(123.34, 456.21) + uSeed);
@@ -143,10 +150,10 @@ function createTile(tileEl) {
 
           void main() {
             vec4 col = texture2D(uColor, vUv);
-            vec2 d = vUv - uBloomCenter;
+            vec2 d = vTileUv - uBloomCenter;
             float dist = length(d);
-            float n = (fbm(vUv * 3.2) - 0.5) * 0.35;
-            float f2 = (fbm(vUv * 8.0 + 13.0) - 0.5) * 0.08;
+            float n = (fbm(vTileUv * 3.2) - 0.5) * 0.35;
+            float f2 = (fbm(vTileUv * 8.0 + 13.0) - 0.5) * 0.08;
             float edgeDist = dist + n + f2;
 
             float alpha = smoothstep(uProgress + 0.05, uProgress - 0.05, edgeDist);
