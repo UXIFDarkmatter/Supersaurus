@@ -1,2 +1,5 @@
 .venv/
 __pycache__/
+
+# Heavyweight image originals — only the web-optimized versions are committed.
+images/People/Nostalgia/
