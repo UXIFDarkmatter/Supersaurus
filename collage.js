@@ -11,7 +11,7 @@
     { src: N + "20210324_130600.jpg", left: -4,  top: 76,  width: 20, rot: 4,  z: 3 },
 
     // RIGHT column (4)
-    { src: N + "spud_game.jpg",       left: 65,  top: -18, width: 12, rot: 3,  z: 2 },
+    { src: N + "spud_game.jpg",       left: 76,  top: -18, width: 12, rot: 3,  z: 2 },
     { src: N + "image_12.jpg",        left: 83,  top: 26,  width: 17, rot: -3, z: 3, clip: "polygon(0 3%, 100% 0, 100% 97%, 6% 100%)" },
     { src: N + "image_15.jpg",        left: 72,  top: 46,  width: 19, rot: 4,  z: 2 },
     { src: N + "image_18.jpg",        left: 85,  top: 70,  width: 13, rot: -4, z: 3 },
