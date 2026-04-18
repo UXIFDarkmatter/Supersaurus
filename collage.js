@@ -7,13 +7,13 @@
     // LEFT column (4)
     { src: N + "g_hat_game.jpg",      left: -3,  top: -7,  width: 22, rot: -4, z: 2, clip: "polygon(3% 0, 100% 4%, 97% 100%, 0 96%)" },
     { src: N + "image_11.jpg",        left: -2,  top: 24,  width: 17, rot: 3,  z: 3 },
-    { src: N + "image_14.jpg",        left: 10,  top: 50,  width: 19, rot: -2, z: 2, clip: "polygon(6% 0, 100% 2%, 94% 100%, 0 98%)" },
+    { src: N + "image_14.jpg",        left: 10,  top: 32,  width: 19, rot: -2, z: 2, clip: "polygon(6% 0, 100% 2%, 94% 100%, 0 98%)" },
     { src: N + "20210324_130600.jpg", left: -4,  top: 76,  width: 20, rot: 4,  z: 3 },
 
     // RIGHT column (4)
     { src: N + "spud_game.jpg",       left: 82,  top: -14, width: 15, rot: 3,  z: 2 },
     { src: N + "image_12.jpg",        left: 83,  top: 26,  width: 17, rot: -3, z: 3, clip: "polygon(0 3%, 100% 0, 100% 97%, 6% 100%)" },
-    { src: N + "image_15.jpg",        left: 72,  top: 54,  width: 19, rot: 4,  z: 2 },
+    { src: N + "image_15.jpg",        left: 72,  top: 46,  width: 19, rot: 4,  z: 2 },
     { src: N + "image_18.jpg",        left: 85,  top: 80,  width: 16, rot: -4, z: 3 },
 
     // TOP band (3)
