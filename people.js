@@ -24,6 +24,7 @@ function updateSharedAspect(aspect) {
 
 function createTile(tileEl) {
   const canvas = tileEl.querySelector("canvas");
+  if (!canvas) return null; // blank tile (no image) — CSS handles it
   const colorSrc = tileEl.dataset.color;
   const depthSrc = tileEl.dataset.depth;
   const index = Number(tileEl.dataset.index);
@@ -194,7 +195,8 @@ function createTile(tileEl) {
 }
 
 document.querySelectorAll(".people-tile").forEach((el) => {
-  tiles.push(createTile(el));
+  const t = createTile(el);
+  if (t) tiles.push(t);
 });
 
 const io = new IntersectionObserver(

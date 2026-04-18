@@ -77,18 +77,15 @@
     /* People grid on top */
     .people-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: var(--gap);
-      width: min(62vw, calc(78vh * 1.5));
+      width: min(88vw, calc(82vh * 1.7));
       position: relative;
       z-index: 4;
       --tile-aspect: 3 / 4; /* overridden in JS to max image aspect once loaded */
     }
     .people-slot {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: clamp(6px, 0.6vw, 12px);
+      position: relative;
     }
     .people-tile {
       position: relative;
@@ -98,6 +95,15 @@
       aspect-ratio: var(--tile-aspect);
       width: 100%;
     }
+    .people-tile[data-blank="true"] {
+      background: #c8c0b4;
+      opacity: 0;
+      animation: blank-in 0.9s ease-out forwards;
+      animation-delay: calc(var(--i, 0) * 180ms + 150ms);
+    }
+    @keyframes blank-in {
+      to { opacity: 1; }
+    }
     .people-tile canvas {
       position: absolute;
       inset: 0;
@@ -105,25 +111,57 @@
       height: 100%;
       display: block;
     }
-    .people-label {
-      font-family: "Permanent Marker", "Comic Sans MS", cursive;
-      color: #1d120a;
-      font-size: clamp(16px, 1.55vw, 26px);
-      line-height: 1;
+    .people-caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: clamp(18px, 2.2vw, 36px) clamp(8px, 0.9vw, 14px) clamp(8px, 0.9vw, 14px);
       text-align: center;
+      color: #ffffff;
+      pointer-events: none;
+      z-index: 6;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 0.55) 100%
+      );
+      opacity: 0;
+      animation: caption-in 0.55s ease-out forwards;
+      animation-delay: calc(var(--i, 0) * 180ms + 750ms);
+    }
+    @keyframes caption-in {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .people-name {
+      font-family: "Permanent Marker", "Comic Sans MS", cursive;
+      font-size: clamp(14px, 1.35vw, 22px);
+      line-height: 1;
       letter-spacing: 0.02em;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+      margin: 0 0 4px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+    }
+    .people-title {
+      font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-size: clamp(9px, 0.75vw, 12px);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin: 0;
+      opacity: 0.92;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
     }
     @media (max-width: 1100px) {
       .people-grid {
-        grid-template-columns: repeat(2, 1fr);
-        width: min(64vw, calc(42vh * 1.5));
+        grid-template-columns: repeat(3, 1fr);
+        width: min(86vw, calc(56vh * 1.7));
       }
     }
     @media (max-width: 560px) {
       .people-grid {
-        grid-template-columns: 1fr;
-        width: min(64vw, calc(20vh * 1.5));
+        grid-template-columns: repeat(2, 1fr);
+        width: min(86vw, calc(40vh * 1.7));
       }
     }
   </style>
@@ -134,37 +172,45 @@
   <div class="collage-vignette" aria-hidden="true"></div>
 
   <div class="people-grid" id="peopleGrid">
-    <div class="people-slot">
-      <div class="people-tile" data-index="0" data-color="images/People/1.png" data-depth="images/People/1_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Wes</div>
+    <div class="people-slot" style="--i: 0">
+      <div class="people-tile" data-index="0" data-color="images/People/9.png" data-depth="images/People/9_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Garrett</p><p class="people-title">CEO</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="1" data-color="images/People/2.png" data-depth="images/People/2_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Matt</div>
+    <div class="people-slot" style="--i: 1">
+      <div class="people-tile" data-index="1" data-color="images/People/1.png" data-depth="images/People/1_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Wes</p><p class="people-title">Game Director</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="2" data-color="images/People/3.png" data-depth="images/People/3_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Hayden</div>
+    <div class="people-slot" style="--i: 2">
+      <div class="people-tile" data-index="2" data-color="images/People/2.png" data-depth="images/People/2_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Matt</p><p class="people-title">Tech Director</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="3" data-color="images/People/4.png" data-depth="images/People/4_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Chris</div>
+    <div class="people-slot" style="--i: 3">
+      <div class="people-tile" data-index="3" data-color="images/People/3.png" data-depth="images/People/3_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Hayden</p><p class="people-title">Game Designer</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="4" data-color="images/People/5.png" data-depth="images/People/5_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Michael</div>
+    <div class="people-slot" style="--i: 4">
+      <div class="people-tile" data-index="4" data-color="images/People/4.png" data-depth="images/People/4_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Chris</p><p class="people-title">Engineer</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="5" data-color="images/People/6.png" data-depth="images/People/6_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Mike</div>
+    <div class="people-slot" style="--i: 5">
+      <div class="people-tile" data-index="5" data-color="images/People/5.png" data-depth="images/People/5_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Michael</p><p class="people-title">Game Designer</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="6" data-color="images/People/7.png" data-depth="images/People/7_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Jacob</div>
+    <div class="people-slot" style="--i: 6">
+      <div class="people-tile" data-index="6" data-color="images/People/6.png" data-depth="images/People/6_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Mike</p><p class="people-title">VFX Artist</p></div>
     </div>
-    <div class="people-slot">
-      <div class="people-tile" data-index="7" data-color="images/People/8.png" data-depth="images/People/8_depth.jpg"><canvas></canvas></div>
-      <div class="people-label">Adri</div>
+    <div class="people-slot" style="--i: 7">
+      <div class="people-tile" data-index="7" data-color="images/People/7.png" data-depth="images/People/7_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Jacob</p><p class="people-title">Environment Artist</p></div>
+    </div>
+    <div class="people-slot" style="--i: 8">
+      <div class="people-tile" data-index="8" data-color="images/People/8.png" data-depth="images/People/8_depth.jpg"><canvas></canvas></div>
+      <div class="people-caption"><p class="people-name">Adri</p><p class="people-title">VFX Artist</p></div>
+    </div>
+    <div class="people-slot" style="--i: 9">
+      <div class="people-tile" data-index="9" data-blank="true"></div>
+      <div class="people-caption"><p class="people-name">Nate</p><p class="people-title">Animator</p></div>
     </div>
   </div>
 
