@@ -10,6 +10,18 @@ const CROP_INSET = 0.09; // fraction trimmed from each edge to hide the sketch f
 const tiles = [];
 const loader = new THREE.TextureLoader();
 
+// Tiles share a single aspect ratio = max of all image aspects (widest → shortest height
+// when columns are equal width), so every card has the same final height.
+let maxImageAspect = 0;
+function updateSharedAspect(aspect) {
+  if (aspect <= maxImageAspect) return;
+  maxImageAspect = aspect;
+  const grid = document.querySelector(".people-grid");
+  if (grid) grid.style.setProperty("--tile-aspect", String(maxImageAspect));
+  // Tile sizes just changed; refit any tiles that are already loaded.
+  tiles.forEach((t) => t.fit && t.fit());
+}
+
 function createTile(tileEl) {
   const canvas = tileEl.querySelector("canvas");
   const colorSrc = tileEl.dataset.color;
@@ -85,7 +97,7 @@ function createTile(tileEl) {
       colorTex.colorSpace = THREE.SRGBColorSpace;
       colorTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tile.imageAspect = colorTex.image.width / colorTex.image.height;
-      tileEl.style.aspectRatio = `${colorTex.image.width} / ${colorTex.image.height}`;
+      updateSharedAspect(tile.imageAspect);
 
       const geo = new THREE.PlaneGeometry(1, 1, GRID_SEGMENTS, GRID_SEGMENTS);
       const material = new THREE.ShaderMaterial({

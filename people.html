@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Supersaurus — People</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
   <style>
     :root {
       --tile-bg: #ffffff;
@@ -79,13 +82,21 @@
       width: min(62vw, calc(78vh * 1.5));
       position: relative;
       z-index: 4;
+      --tile-aspect: 3 / 4; /* overridden in JS to max image aspect once loaded */
+    }
+    .people-slot {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: clamp(6px, 0.6vw, 12px);
     }
     .people-tile {
       position: relative;
       overflow: hidden;
       background: transparent;
       border-radius: 18px;
-      aspect-ratio: 3 / 4;
+      aspect-ratio: var(--tile-aspect);
+      width: 100%;
     }
     .people-tile canvas {
       position: absolute;
@@ -93,6 +104,15 @@
       width: 100%;
       height: 100%;
       display: block;
+    }
+    .people-label {
+      font-family: "Permanent Marker", "Comic Sans MS", cursive;
+      color: #1d120a;
+      font-size: clamp(16px, 1.55vw, 26px);
+      line-height: 1;
+      text-align: center;
+      letter-spacing: 0.02em;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
     }
     @media (max-width: 1100px) {
       .people-grid {
@@ -114,14 +134,38 @@
   <div class="collage-vignette" aria-hidden="true"></div>
 
   <div class="people-grid" id="peopleGrid">
-    <div class="people-tile" data-index="0" data-color="images/People/1.png" data-depth="images/People/1_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="1" data-color="images/People/2.png" data-depth="images/People/2_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="2" data-color="images/People/3.png" data-depth="images/People/3_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="3" data-color="images/People/4.png" data-depth="images/People/4_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="4" data-color="images/People/5.png" data-depth="images/People/5_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="5" data-color="images/People/6.png" data-depth="images/People/6_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="6" data-color="images/People/7.png" data-depth="images/People/7_depth.jpg"><canvas></canvas></div>
-    <div class="people-tile" data-index="7" data-color="images/People/8.png" data-depth="images/People/8_depth.jpg"><canvas></canvas></div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="0" data-color="images/People/1.png" data-depth="images/People/1_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Wes</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="1" data-color="images/People/2.png" data-depth="images/People/2_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Matt</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="2" data-color="images/People/3.png" data-depth="images/People/3_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Hayden</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="3" data-color="images/People/4.png" data-depth="images/People/4_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Chris</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="4" data-color="images/People/5.png" data-depth="images/People/5_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Michael</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="5" data-color="images/People/6.png" data-depth="images/People/6_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Mike</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="6" data-color="images/People/7.png" data-depth="images/People/7_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Jacob</div>
+    </div>
+    <div class="people-slot">
+      <div class="people-tile" data-index="7" data-color="images/People/8.png" data-depth="images/People/8_depth.jpg"><canvas></canvas></div>
+      <div class="people-label">Adri</div>
+    </div>
   </div>
 
   <script type="importmap">
