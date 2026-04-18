@@ -11,10 +11,10 @@
     { src: N + "20210324_130600.jpg", left: -4,  top: 76,  width: 20, rot: 4,  z: 3 },
 
     // RIGHT column (4)
-    { src: N + "spud_game.jpg",       left: 82,  top: -14, width: 15, rot: 3,  z: 2 },
+    { src: N + "spud_game.jpg",       left: 65,  top: -18, width: 12, rot: 3,  z: 2 },
     { src: N + "image_12.jpg",        left: 83,  top: 26,  width: 17, rot: -3, z: 3, clip: "polygon(0 3%, 100% 0, 100% 97%, 6% 100%)" },
     { src: N + "image_15.jpg",        left: 72,  top: 46,  width: 19, rot: 4,  z: 2 },
-    { src: N + "image_18.jpg",        left: 85,  top: 80,  width: 16, rot: -4, z: 3 },
+    { src: N + "image_18.jpg",        left: 85,  top: 70,  width: 13, rot: -4, z: 3 },
 
     // TOP band (3)
     { src: N + "image_13.jpg",        left: 22,  top: -4,  width: 13, rot: -3, z: 1 },
@@ -23,7 +23,7 @@
 
     // BOTTOM band (3)
     { src: N + "20220615_215346.jpg", left: 24,  top: 78,  width: 15, rot: 5,  z: 1 },
-    { src: N + "image_19.jpg",        left: 46,  top: 90,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
+    { src: N + "image_19.jpg",        left: 46,  top: 80,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
     { src: N + "20220615_215358.jpg", left: 66,  top: 84,  width: 15, rot: 3,  z: 1 },
   ];
 
