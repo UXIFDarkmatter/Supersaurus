@@ -8,8 +8,7 @@
     :root {
       --tile-bg: #ffffff;
       --page-bg: #ffffff;
-      --gap: 14px;
-      --pad: 28px;
+      --gap: clamp(10px, 1.2vw, 18px);
     }
     * { box-sizing: border-box; }
     html, body {
@@ -21,21 +20,26 @@
       width: 100%;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .people-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: repeat(2, 1fr);
       gap: var(--gap);
-      padding: var(--pad);
-      width: 100%;
-      height: 100%;
+      /* Size: width-constrained or height-constrained, whichever is smaller.
+         Tile aspect ~3:4 → 2 rows of height (W/4)*4/3 = W/3 each, total 2W/3 + gap.
+         So grid width max = (available height) * 1.5 approximately. */
+      width: min(82vw, calc(80vh * 1.5));
     }
     .people-tile {
       position: relative;
       overflow: hidden;
       background: var(--tile-bg);
       border-radius: 6px;
-      aspect-ratio: auto;
+      aspect-ratio: 3 / 4;
     }
     .people-tile canvas {
       position: absolute;
@@ -47,13 +51,13 @@
     @media (max-width: 1100px) {
       .people-grid {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
+        width: min(70vw, calc(42vh * 1.5));
       }
     }
     @media (max-width: 560px) {
       .people-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(8, auto);
+        width: min(70vw, calc(20vh * 1.5));
       }
     }
   </style>

@@ -84,6 +84,7 @@ function createTile(tileEl) {
       colorTex.colorSpace = THREE.SRGBColorSpace;
       colorTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
       tile.imageAspect = colorTex.image.width / colorTex.image.height;
+      tileEl.style.aspectRatio = `${colorTex.image.width} / ${colorTex.image.height}`;
 
       const geo = new THREE.PlaneGeometry(1, 1, GRID_SEGMENTS, GRID_SEGMENTS);
       const material = new THREE.ShaderMaterial({
