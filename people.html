@@ -105,6 +105,20 @@
       z-index: 4;
       --tile-aspect: 3 / 4; /* overridden in JS to max image aspect once loaded */
     }
+    .people-grid::before {
+      content: "";
+      position: absolute;
+      left: clamp(-32px, -2.2vw, -18px);
+      right: clamp(-32px, -2.2vw, -18px);
+      bottom: clamp(-32px, -2.2vw, -18px);
+      top: clamp(-220px, -15vh, -110px);
+      background: #ffffff;
+      border-radius: 28px;
+      box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.18),
+        0 18px 44px rgba(20, 10, 4, 0.3);
+      z-index: -1;
+    }
     .people-slot {
       position: relative;
     }
