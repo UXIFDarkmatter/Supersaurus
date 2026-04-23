@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supersaurus</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <section class="hero" id="hero" aria-label="Hero">
+    <img
+      src="images/hero/composite.jpg"
+      alt="Supersaurus hero composition"
+      class="hero-image"
+      id="heroImage"
+    />
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <canvas class="ember-canvas" id="emberCanvas" aria-hidden="true"></canvas>
+    <div class="intro-splash" id="introSplash" aria-hidden="true">
+      <img src="images/supersaurus.gif" alt="" id="introGif" />
+    </div>
+    <div class="hero-logo-wrap" id="heroLogoWrap">
+      <div class="hero-rays" aria-hidden="true">
+        <div class="hero-rays-layer hero-rays-a"></div>
+        <div class="hero-rays-layer hero-rays-b"></div>
+      </div>
+      <img
+        src="images/library_logo_transparent.png"
+        alt="Punch Upon A Time"
+        class="hero-logo"
+        id="heroLogo"
+      />
+    </div>
+  </section>
+
+  <script src="intro-splash.js"></script>
+  <script src="hero-layered.js"></script>
+  <script src="ember-particles.js"></script>
+  <script src="iframe-scroll-forward.js"></script>
+</body>
+</html>

@@ -3,3 +3,6 @@ __pycache__/
 
 # Heavyweight image originals — only the web-optimized versions are committed.
 images/People/Nostalgia/
+
+# Raw source art (PSDs etc). The extractor writes committed outputs to images/hero/.
+PSD/

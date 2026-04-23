@@ -1,0 +1,127 @@
+{
+  "canvas": {
+    "width": 2400,
+    "height": 1057
+  },
+  "source": "Hero_Seperated_Characters.psd",
+  "source_canvas": {
+    "width": 10900,
+    "height": 4800
+  },
+  "scale": 0.220183,
+  "composite": "composite.jpg",
+  "layers": [
+    {
+      "id": "BG_DepthMap",
+      "index": 0,
+      "file": "00_bg_depthmap.png",
+      "bounds": {
+        "x": -61,
+        "y": 0,
+        "width": 2461,
+        "height": 1119
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "00_bg_depthmap_depth.png"
+    },
+    {
+      "id": "Snow_Queen",
+      "index": 1,
+      "file": "01_snow_queen.png",
+      "bounds": {
+        "x": 965,
+        "y": 449,
+        "width": 327,
+        "height": 422
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "01_snow_queen_depth.png"
+    },
+    {
+      "id": "Red",
+      "index": 2,
+      "file": "02_red.png",
+      "bounds": {
+        "x": 1110,
+        "y": 240,
+        "width": 206,
+        "height": 305
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "02_red_depth.png"
+    },
+    {
+      "id": "Zorro",
+      "index": 3,
+      "file": "03_zorro.png",
+      "bounds": {
+        "x": 854,
+        "y": 263,
+        "width": 538,
+        "height": 322
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "03_zorro_depth.png"
+    },
+    {
+      "id": "Hercules",
+      "index": 4,
+      "file": "04_hercules.png",
+      "bounds": {
+        "x": 1225,
+        "y": 207,
+        "width": 481,
+        "height": 754
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "04_hercules_depth.png"
+    },
+    {
+      "id": "bigbadwolf",
+      "index": 5,
+      "file": "05_bigbadwolf.png",
+      "bounds": {
+        "x": 377,
+        "y": 91,
+        "width": 635,
+        "height": 859
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "05_bigbadwolf_depth.png"
+    },
+    {
+      "id": "Frog_Prince",
+      "index": 6,
+      "file": "06_frog_prince.png",
+      "bounds": {
+        "x": 1392,
+        "y": 376,
+        "width": 379,
+        "height": 361
+      },
+      "opacity": 1.0,
+      "blend_mode": "normal",
+      "is_group": false,
+      "hints": {},
+      "depth_file": "06_frog_prince_depth.png"
+    }
+  ]
+}
