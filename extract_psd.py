@@ -19,6 +19,7 @@ Usage:
   python extract_psd.py PSD/Hero_Seperated_Characters.psd --max-width 3200
   python extract_psd.py PSD/Hero_Seperated_Characters.psd --max-width 0       # no downsample (full PSD resolution)
   python extract_psd.py PSD/Hero_Seperated_Characters.psd --include-hidden
+  python extract_psd.py --clean                               # wipe existing PNGs/JPGs/JSON first (for renamed layers)
 """
 
 import argparse
@@ -78,6 +79,7 @@ def main():
     parser.add_argument("--out", default="images/hero", help="Output directory (default: images/hero)")
     parser.add_argument("--include-hidden", action="store_true", help="Export nodes that are hidden in the PSD")
     parser.add_argument("--max-width", type=int, default=2400, help="Downsample so canvas width <= this (default: 2400). Use 0 to keep full PSD resolution.")
+    parser.add_argument("--clean", action="store_true", help="Delete existing PNGs/JPGs/JSON in the output dir before writing (rerun generate_layer_depths.py after).")
     args = parser.parse_args()
 
     psd_path = Path(args.psd_path)
@@ -88,6 +90,14 @@ def main():
         sys.exit(1)
 
     out_dir.mkdir(parents=True, exist_ok=True)
+
+    if args.clean:
+        removed = 0
+        for pattern in ("*.png", "*.jpg", "*.json"):
+            for f in out_dir.glob(pattern):
+                f.unlink()
+                removed += 1
+        print(f"Cleaned {removed} existing file(s) from {out_dir}")
 
     print(f"Reading {psd_path}...")
     psd = PSDImage.open(psd_path)

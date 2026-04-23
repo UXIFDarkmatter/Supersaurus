@@ -12,9 +12,9 @@
   "composite": "composite.jpg",
   "layers": [
     {
-      "id": "BG_DepthMap",
+      "id": "BG",
       "index": 0,
-      "file": "00_bg_depthmap.png",
+      "file": "00_bg.png",
       "bounds": {
         "x": -61,
         "y": 0,
@@ -25,7 +25,7 @@
       "blend_mode": "normal",
       "is_group": false,
       "hints": {},
-      "depth_file": "00_bg_depthmap_depth.png"
+      "depth_file": "00_bg_depth.png"
     },
     {
       "id": "Snow_Queen",
@@ -92,7 +92,7 @@
       "depth_file": "04_hercules_depth.png"
     },
     {
-      "id": "bigbadwolf",
+      "id": "BigBadWolf",
       "index": 5,
       "file": "05_bigbadwolf.png",
       "bounds": {
@@ -120,7 +120,9 @@
       "opacity": 1.0,
       "blend_mode": "normal",
       "is_group": false,
-      "hints": { "anchor": "none" },
+      "hints": {
+        "anchor": "none"
+      },
       "depth_file": "06_frog_prince_depth.png"
     }
   ]
