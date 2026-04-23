@@ -33,11 +33,13 @@
     attribute vec2 aPos;
     uniform vec4 uRect;     // (left, top, ndcWidth, ndcHeight); local aPos.y=0 is top of layer
     uniform vec2 uShift;    // inter-plane translation in NDC
+    uniform float uAnchor;  // 0 = uniform translate; 1 = bottom pinned (top gets full shift)
     varying vec2 vUv;
     void main() {
       vUv = aPos;
-      float x = uRect.x + aPos.x * uRect.z + uShift.x;
-      float y = uRect.y - aPos.y * uRect.w + uShift.y;
+      float shearScale = mix(1.0, 1.0 - aPos.y, uAnchor);
+      float x = uRect.x + aPos.x * uRect.z + uShift.x * shearScale;
+      float y = uRect.y - aPos.y * uRect.w + uShift.y * shearScale;
       gl_Position = vec4(x, y, 0.0, 1.0);
     }
   `;
@@ -91,6 +93,7 @@
   const posLoc = gl.getAttribLocation(prog, "aPos");
   const rectLoc = gl.getUniformLocation(prog, "uRect");
   const shiftLoc = gl.getUniformLocation(prog, "uShift");
+  const anchorLoc = gl.getUniformLocation(prog, "uAnchor");
   const colorLoc = gl.getUniformLocation(prog, "uColor");
   const depthLoc = gl.getUniformLocation(prog, "uDepth");
   const intraLoc = gl.getUniformLocation(prog, "uIntra");
@@ -168,6 +171,7 @@
       const shiftY =  current.y * INTER_STRENGTH * 2 * layer.interWeight;
       gl.uniform4fv(rectLoc, layer.rect);
       gl.uniform2f(shiftLoc, shiftX, shiftY);
+      gl.uniform1f(anchorLoc, layer.anchor);
       gl.uniform2f(intraLoc, current.x * INTRA_STRENGTH, current.y * INTRA_STRENGTH);
 
       gl.activeTexture(gl.TEXTURE0);
@@ -200,8 +204,17 @@
 
       const N = m.layers.length;
       const layers = m.layers.map((L, i) => {
-        const hint = L.hints && L.hints.parallax;
-        const interWeight = hint != null ? Number(hint) : N > 1 ? i / (N - 1) : 0;
+        const pHint = L.hints && L.hints.parallax;
+        const interWeight = pHint != null ? Number(pHint) : N > 1 ? i / (N - 1) : 0;
+        // Anchor default is bottom-pinned (1.0) so grounded characters don't slide off the floor.
+        // Bg is unaffected anyway because its interWeight is ~0.
+        const aHint = L.hints && L.hints.anchor;
+        let anchor = 1;
+        if (aHint != null) {
+          if (aHint === "bottom") anchor = 1;
+          else if (aHint === "none" || aHint === "top") anchor = 0;
+          else if (!isNaN(Number(aHint))) anchor = Math.max(0, Math.min(1, Number(aHint)));
+        }
         const nx = L.bounds.x / W;
         const ny = L.bounds.y / H;
         const nw = L.bounds.width / W;
@@ -212,7 +225,7 @@
           2 * nw,
           2 * nh,
         ]);
-        return Object.assign({}, L, { interWeight, rect });
+        return Object.assign({}, L, { interWeight, anchor, rect });
       });
 
       return Promise.all(
