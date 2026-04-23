@@ -36,12 +36,16 @@ SKIP_PREFIXES = ("_", "hidden_", "hidden-")
 
 
 def parse_node_name(raw_name: str):
-    """'fg_dino@parallax=0.6@blend=screen' -> ('fg_dino', {'parallax': 0.6, 'blend': 'screen'})"""
+    """'fg_dino@parallax=0.6@opaque' -> ('fg_dino', {'parallax': 0.6, 'opaque': True})"""
     parts = [p.strip() for p in raw_name.split("@")]
     name = parts[0]
     hints = {}
     for part in parts[1:]:
         if "=" not in part:
+            # Flag-style hint: @opaque -> {"opaque": True}
+            key = part.strip()
+            if key:
+                hints[key] = True
             continue
         key, value = part.split("=", 1)
         key = key.strip()
@@ -175,7 +179,27 @@ def main():
             filename = f"{len(layers_out):02d}_{base}_{i}.png"
         used_filenames.add(filename)
 
-        image.save(out_dir / filename, "PNG", optimize=True)
+        # Opaque planes compress an order of magnitude better as JPEG. Auto-detect
+        # only when there are zero transparent pixels (lossless call). Use the
+        # @opaque hint to force JPEG for planes with painterly edge bleed — their
+        # transparent pixels get flattened over white (matches .hero CSS bg).
+        if image.mode == "RGBA":
+            truly_opaque = image.split()[-1].getextrema()[0] >= 250
+        else:
+            truly_opaque = True
+        hint_opaque = bool(hints.get("opaque")) or hints.get("encoding") in ("jpg", "jpeg")
+
+        if truly_opaque or hint_opaque:
+            if image.mode == "RGBA":
+                flat = Image.new("RGB", image.size, (255, 255, 255))
+                flat.paste(image, mask=image.split()[-1])
+                image = flat
+            elif image.mode != "RGB":
+                image = image.convert("RGB")
+            filename = filename.rsplit(".", 1)[0] + ".jpg"
+            image.save(out_dir / filename, "JPEG", quality=88, optimize=True)
+        else:
+            image.save(out_dir / filename, "PNG", optimize=True)
 
         opacity_byte = getattr(node, "opacity", 255)
         layers_out.append({
