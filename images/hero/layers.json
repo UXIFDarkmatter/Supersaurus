@@ -120,7 +120,7 @@
       "opacity": 1.0,
       "blend_mode": "normal",
       "is_group": false,
-      "hints": {},
+      "hints": { "anchor": "none" },
       "depth_file": "06_frog_prince_depth.png"
     }
   ]
