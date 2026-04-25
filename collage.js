@@ -56,16 +56,20 @@
   ];
 
   const DROPS = [
-    { x: "40%", y: "26%", delay: "0s",   scale: 0.8  }, // upper-left forehead
-    { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  }, // upper-right temple
-    { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  }, // cheek/jaw
-    { x: "18%", y: "46%", delay: "0.4s", scale: 0.55 }, // elbow
-    { x: "12%", y: "56%", delay: "1.3s", scale: 0.55 }, // wrist
+    { x: "40%", y: "26%", delay: "0s",   scale: 0.8  },                  // upper-left forehead
+    { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  },                  // upper-right temple
+    { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  },                  // cheek/jaw
+    { x: "18%", y: "46%", delay: "0.4s", scale: 0.55, splash: true },    // elbow → floor
+    { x: "12%", y: "56%", delay: "1.3s", scale: 0.55, splash: true },    // wrist → floor
   ];
   const DROP_SVG =
     '<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
       '<path d="M10 2 C 10 9, 2 17, 2 22 A 8 8 0 0 0 18 22 C 18 17, 10 9, 10 2 Z" fill="#5ec7ff" stroke="#1f6aa0" stroke-width="1.4" stroke-linejoin="round"/>' +
       '<ellipse cx="7" cy="20" rx="1.6" ry="2.6" fill="#ffffff" opacity="0.75"/>' +
+    '</svg>';
+  const RIPPLE_SVG =
+    '<svg viewBox="0 0 20 8" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
+      '<ellipse cx="10" cy="4" rx="9" ry="3" fill="none" stroke="#5ec7ff" stroke-width="1.4"/>' +
     '</svg>';
 
   const bg = document.getElementById("collageBg");
@@ -113,8 +117,20 @@
           el.style.setProperty("--y", dp.y);
           el.style.setProperty("--delay", dp.delay);
           if (dp.scale) el.style.setProperty("--scale", dp.scale);
+          if (dp.splash) el.classList.add("sweat-drop--splash");
           el.innerHTML = DROP_SVG;
           sweat.appendChild(el);
+
+          if (dp.splash) {
+            const ripple = document.createElement("div");
+            ripple.className = "sweat-ripple";
+            ripple.style.setProperty("--x", dp.x);
+            ripple.style.setProperty("--y", dp.y);
+            ripple.style.setProperty("--delay", dp.delay);
+            if (dp.scale) ripple.style.setProperty("--scale", dp.scale);
+            ripple.innerHTML = RIPPLE_SVG;
+            sweat.appendChild(ripple);
+          }
         });
         slot.appendChild(sweat);
       }
