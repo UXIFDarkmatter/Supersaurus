@@ -133,13 +133,25 @@
   let aspect = 1;
 
   function resize() {
-    const w = hero.clientWidth;
-    const h = Math.round(w / aspect);
-    canvas.width = Math.round(w * devicePixelRatio);
-    canvas.height = Math.round(h * devicePixelRatio);
-    canvas.style.width = w + "px";
-    canvas.style.height = h + "px";
-    hero.style.height = h + "px";
+    const cw = hero.clientWidth;
+    const ch = hero.clientHeight;
+    const containerAspect = cw / ch;
+    let cssW, cssH;
+    if (containerAspect > aspect) {
+      // container wider than scene → fill width, overflow height
+      cssW = cw;
+      cssH = cw / aspect;
+    } else {
+      // container taller (or equal) → fill height, overflow width
+      cssH = ch;
+      cssW = ch * aspect;
+    }
+    canvas.width = Math.round(cssW * devicePixelRatio);
+    canvas.height = Math.round(cssH * devicePixelRatio);
+    canvas.style.width = cssW + "px";
+    canvas.style.height = cssH + "px";
+    canvas.style.left = ((cw - cssW) / 2) + "px";
+    canvas.style.top = ((ch - cssH) / 2) + "px";
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
 
