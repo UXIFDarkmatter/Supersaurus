@@ -54,6 +54,31 @@
       opacity: 0.42;
       z-index: 3;
     }
+
+    .chris-sweat {
+      position: absolute;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 4;
+    }
+    .sweat-drop {
+      position: absolute;
+      left: var(--x, 30%);
+      top: var(--y, 20%);
+      width: clamp(12px, 1.3vw, 20px);
+      height: clamp(18px, 2vw, 30px);
+      opacity: 0;
+      filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.25));
+      animation: drip 2.4s cubic-bezier(0.5, 0, 0.75, 0) infinite;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes drip {
+      0%   { transform: translateY(0) scale(0.4);  opacity: 0; }
+      12%  { transform: translateY(2px) scale(0.8); opacity: 0.5; }
+      25%  { transform: translateY(6px) scale(1);   opacity: 1; }
+      70%  { transform: translateY(18vh) scale(1);  opacity: 1; }
+      100% { transform: translateY(26vh) scale(1.2); opacity: 0; }
+    }
   </style>
 </head>
 <body>

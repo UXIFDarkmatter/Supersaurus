@@ -46,6 +46,38 @@
       if (s.clip) img.style.clipPath = s.clip;
       bg.appendChild(img);
     });
+
+    // Cartoon sweat drops off Chris's head (he's mid-DDR round)
+    const chris = SLOTS[SLOTS.length - 1];
+    const sweat = document.createElement("div");
+    sweat.className = "chris-sweat";
+    sweat.setAttribute("aria-hidden", "true");
+    sweat.style.left = chris.left + "%";
+    sweat.style.top = chris.top + "%";
+    sweat.style.width = chris.width + "vw";
+    sweat.style.height = (chris.width * 1154 / 866) + "vw"; // match chris.jpg aspect
+
+    const DROPS = [
+      { x: "28%", y: "22%", delay: "0s"   },
+      { x: "44%", y: "17%", delay: "0.9s" },
+      { x: "36%", y: "30%", delay: "1.7s" },
+    ];
+    const DROP_SVG =
+      '<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
+        '<path d="M10 2 C 10 9, 2 17, 2 22 A 8 8 0 0 0 18 22 C 18 17, 10 9, 10 2 Z" fill="#5ec7ff" stroke="#1f6aa0" stroke-width="1.4" stroke-linejoin="round"/>' +
+        '<ellipse cx="7" cy="20" rx="1.6" ry="2.6" fill="#ffffff" opacity="0.75"/>' +
+      '</svg>';
+
+    DROPS.forEach((d) => {
+      const el = document.createElement("div");
+      el.className = "sweat-drop";
+      el.style.setProperty("--x", d.x);
+      el.style.setProperty("--y", d.y);
+      el.style.setProperty("--delay", d.delay);
+      el.innerHTML = DROP_SVG;
+      sweat.appendChild(el);
+    });
+    bg.appendChild(sweat);
   }
 
   // ---------- Animated film grain ----------
