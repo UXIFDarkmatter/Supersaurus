@@ -58,8 +58,8 @@
     sweat.style.height = (chris.width * 1154 / 866) + "vw"; // match chris.jpg aspect
 
     const DROPS = [
-      { x: "28%", y: "22%", delay: "0s"   },
-      { x: "44%", y: "17%", delay: "0.9s" },
+      { x: "32%", y: "26%", delay: "0s",   scale: 0.8 },
+      { x: "40%", y: "24%", delay: "0.9s", scale: 0.8 },
       { x: "36%", y: "30%", delay: "1.7s" },
     ];
     const DROP_SVG =
@@ -74,6 +74,7 @@
       el.style.setProperty("--x", d.x);
       el.style.setProperty("--y", d.y);
       el.style.setProperty("--delay", d.delay);
+      if (d.scale) el.style.setProperty("--scale", d.scale);
       el.innerHTML = DROP_SVG;
       sweat.appendChild(el);
     });

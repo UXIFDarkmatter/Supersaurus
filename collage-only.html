@@ -65,8 +65,8 @@
       position: absolute;
       left: var(--x, 30%);
       top: var(--y, 20%);
-      width: clamp(12px, 1.3vw, 20px);
-      height: clamp(18px, 2vw, 30px);
+      width: calc(clamp(12px, 1.3vw, 20px) * var(--scale, 1));
+      height: calc(clamp(18px, 2vw, 30px) * var(--scale, 1));
       opacity: 0;
       filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.25));
       animation: drip 2.4s cubic-bezier(0.5, 0, 0.75, 0) infinite;
