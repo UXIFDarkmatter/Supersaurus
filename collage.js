@@ -25,6 +25,9 @@
     { src: N + "20220615_215346.jpg", left: 24,  top: 78,  width: 15, rot: 5,  z: 1 },
     { src: N + "image_19.jpg",        left: 46,  top: 80,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
     { src: N + "20220615_215358.jpg", left: 66,  top: 84,  width: 15, rot: 3,  z: 1 },
+
+    // CENTER
+    { src: N + "chris.jpg",           left: 42,  top: 32,  width: 16, rot: -3, z: 3 },
   ];
 
   const bg = document.getElementById("collageBg");
@@ -61,8 +64,8 @@
 
   let frame = 0;
   function tick() {
-    // Update grain every other frame => ~30fps for a classic cinematic cadence
-    if ((frame & 1) === 0) {
+    // Update grain every 8th frame => ~7.5fps, a much calmer flicker
+    if (frame % 8 === 0) {
       for (let i = 0; i < data.length; i += 4) {
         const v = (Math.random() * 255) | 0;
         data[i] = v;
