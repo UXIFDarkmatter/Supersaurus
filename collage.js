@@ -30,7 +30,7 @@
     { src: N + "chris.jpg",           left: 42,  top: 32,  width: 16, rot: -3, z: 3 },
   ];
 
-  // Per-slot drift for the montage animation. Chris (last entry) stays static.
+  // Per-slot drift for the montage animation. Last entry is Chris.
   // Format: [dx0 start-vw, dy0, dx1 end-vw, dy1, duration-s, delay-s]
   const DRIFT_PATTERN = [
     // LEFT column — drift rightward
@@ -51,12 +51,29 @@
     [ 3, -1, -4,  2, 22,  -3.5],
     [-4,  1,  3, -1, 26,  -6.5],
     [ 4, -2, -3,  1, 21,  -9.5],
+    // CENTER — Chris, gentler drift + longer cycle so sweat-drop reference stays calm
+    [-2,  1,  3, -1, 28,  -1  ],
   ];
+
+  const DROPS = [
+    { x: "40%", y: "26%", delay: "0s",   scale: 0.8  }, // upper-left forehead
+    { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  }, // upper-right temple
+    { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  }, // cheek/jaw
+    { x: "18%", y: "46%", delay: "0.4s", scale: 0.55 }, // elbow
+    { x: "12%", y: "56%", delay: "1.3s", scale: 0.55 }, // wrist
+  ];
+  const DROP_SVG =
+    '<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
+      '<path d="M10 2 C 10 9, 2 17, 2 22 A 8 8 0 0 0 18 22 C 18 17, 10 9, 10 2 Z" fill="#5ec7ff" stroke="#1f6aa0" stroke-width="1.4" stroke-linejoin="round"/>' +
+      '<ellipse cx="7" cy="20" rx="1.6" ry="2.6" fill="#ffffff" opacity="0.75"/>' +
+    '</svg>';
 
   const bg = document.getElementById("collageBg");
   if (bg) {
     SLOTS.forEach((s, i) => {
       const isChris = i === SLOTS.length - 1;
+      const d = DRIFT_PATTERN[i];
+
       const img = document.createElement("img");
       img.className = "collage-img";
       img.src = s.src;
@@ -65,65 +82,45 @@
       img.style.transform = `rotate(${s.rot}deg)`;
       if (s.clip) img.style.clipPath = s.clip;
 
+      const slot = document.createElement("div");
+      slot.className = "collage-slot";
+      slot.style.left = s.left + "%";
+      slot.style.top = s.top + "%";
+      slot.style.width = s.width + "vw";
+      slot.style.zIndex = String(s.z);
+      slot.style.setProperty("--dx0", d[0] + "vw");
+      slot.style.setProperty("--dy0", d[1] + "vw");
+      slot.style.setProperty("--dx1", d[2] + "vw");
+      slot.style.setProperty("--dy1", d[3] + "vw");
+      slot.style.setProperty("--dur", d[4] + "s");
+      slot.style.setProperty("--dly", d[5] + "s");
+      slot.appendChild(img);
+
       if (isChris) {
-        img.style.left = s.left + "%";
-        img.style.top = s.top + "%";
-        img.style.width = s.width + "vw";
-        img.style.zIndex = String(s.z);
-        bg.appendChild(img);
-      } else {
-        const d = DRIFT_PATTERN[i];
-        const slot = document.createElement("div");
-        slot.className = "collage-slot";
-        slot.style.left = s.left + "%";
-        slot.style.top = s.top + "%";
-        slot.style.width = s.width + "vw";
-        slot.style.zIndex = String(s.z);
-        slot.style.setProperty("--dx0", d[0] + "vw");
-        slot.style.setProperty("--dy0", d[1] + "vw");
-        slot.style.setProperty("--dx1", d[2] + "vw");
-        slot.style.setProperty("--dy1", d[3] + "vw");
-        slot.style.setProperty("--dur", d[4] + "s");
-        slot.style.setProperty("--dly", d[5] + "s");
-        slot.appendChild(img);
-        bg.appendChild(slot);
+        // Sweat drops live inside Chris's slot so they drift + fade with him
+        const sweat = document.createElement("div");
+        sweat.className = "chris-sweat";
+        sweat.setAttribute("aria-hidden", "true");
+        sweat.style.left = "0";
+        sweat.style.top = "0";
+        sweat.style.width = "100%";
+        sweat.style.height = (s.width * 1154 / 866) + "vw";
+
+        DROPS.forEach((dp) => {
+          const el = document.createElement("div");
+          el.className = "sweat-drop";
+          el.style.setProperty("--x", dp.x);
+          el.style.setProperty("--y", dp.y);
+          el.style.setProperty("--delay", dp.delay);
+          if (dp.scale) el.style.setProperty("--scale", dp.scale);
+          el.innerHTML = DROP_SVG;
+          sweat.appendChild(el);
+        });
+        slot.appendChild(sweat);
       }
+
+      bg.appendChild(slot);
     });
-
-    // Cartoon sweat drops off Chris's head (he's mid-DDR round)
-    const chris = SLOTS[SLOTS.length - 1];
-    const sweat = document.createElement("div");
-    sweat.className = "chris-sweat";
-    sweat.setAttribute("aria-hidden", "true");
-    sweat.style.left = chris.left + "%";
-    sweat.style.top = chris.top + "%";
-    sweat.style.width = chris.width + "vw";
-    sweat.style.height = (chris.width * 1154 / 866) + "vw"; // match chris.jpg aspect
-
-    const DROPS = [
-      { x: "40%", y: "26%", delay: "0s",   scale: 0.8  }, // upper-left forehead
-      { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  }, // upper-right temple
-      { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  }, // cheek/jaw
-      { x: "18%", y: "46%", delay: "0.4s", scale: 0.55 }, // elbow
-      { x: "12%", y: "56%", delay: "1.3s", scale: 0.55 }, // wrist
-    ];
-    const DROP_SVG =
-      '<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
-        '<path d="M10 2 C 10 9, 2 17, 2 22 A 8 8 0 0 0 18 22 C 18 17, 10 9, 10 2 Z" fill="#5ec7ff" stroke="#1f6aa0" stroke-width="1.4" stroke-linejoin="round"/>' +
-        '<ellipse cx="7" cy="20" rx="1.6" ry="2.6" fill="#ffffff" opacity="0.75"/>' +
-      '</svg>';
-
-    DROPS.forEach((d) => {
-      const el = document.createElement("div");
-      el.className = "sweat-drop";
-      el.style.setProperty("--x", d.x);
-      el.style.setProperty("--y", d.y);
-      el.style.setProperty("--delay", d.delay);
-      if (d.scale) el.style.setProperty("--scale", d.scale);
-      el.innerHTML = DROP_SVG;
-      sweat.appendChild(el);
-    });
-    bg.appendChild(sweat);
   }
 
   // ---------- Animated film grain ----------
