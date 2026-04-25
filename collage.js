@@ -58,9 +58,11 @@
     sweat.style.height = (chris.width * 1154 / 866) + "vw"; // match chris.jpg aspect
 
     const DROPS = [
-      { x: "32%", y: "26%", delay: "0s",   scale: 0.8 },
-      { x: "40%", y: "24%", delay: "0.9s", scale: 0.8 },
-      { x: "36%", y: "30%", delay: "1.7s" },
+      { x: "40%", y: "26%", delay: "0s",   scale: 0.8  }, // upper-left forehead
+      { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  }, // upper-right temple
+      { x: "44%", y: "28%", delay: "1.7s"              }, // cheek/jaw
+      { x: "18%", y: "46%", delay: "0.4s", scale: 0.55 }, // elbow
+      { x: "12%", y: "56%", delay: "1.3s", scale: 0.55 }, // wrist
     ];
     const DROP_SVG =
       '<svg viewBox="0 0 20 30" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;overflow:visible">' +
