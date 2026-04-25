@@ -17,14 +17,14 @@
     { src: N + "image_18.jpg",        left: 85,  top: 70,  width: 13, rot: -4, z: 3 },
 
     // TOP band (3)
-    { src: N + "image_13.jpg",        left: 22,  top: -4,  width: 13, rot: -3, z: 1 },
-    { src: N + "image_16.jpg",        left: 43,  top: -17, width: 15, rot: 4,  z: 1, clip: "polygon(0 0, 100% 0, 100% 78%, 65% 100%, 30% 92%, 0 80%)" },
-    { src: N + "image_17.jpg",        left: 65,  top: -12, width: 13, rot: -2, z: 1 },
+    { src: N + "image_13.jpg",        left: 22,  top: 2,   width: 13, rot: -3, z: 1 },
+    { src: N + "image_16.jpg",        left: 43,  top: -11, width: 15, rot: 4,  z: 1, clip: "polygon(0 0, 100% 0, 100% 78%, 65% 100%, 30% 92%, 0 80%)" },
+    { src: N + "image_17.jpg",        left: 65,  top: -6,  width: 13, rot: -2, z: 1 },
 
     // BOTTOM band (3)
-    { src: N + "20220615_215346.jpg", left: 24,  top: 78,  width: 15, rot: 5,  z: 1 },
-    { src: N + "image_19.jpg",        left: 46,  top: 80,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
-    { src: N + "20220615_215358.jpg", left: 66,  top: 84,  width: 15, rot: 3,  z: 1 },
+    { src: N + "20220615_215346.jpg", left: 24,  top: 72,  width: 15, rot: 5,  z: 1 },
+    { src: N + "image_19.jpg",        left: 46,  top: 74,  width: 13, rot: -3, z: 1, clip: "polygon(0 20%, 35% 0, 70% 8%, 100% 18%, 100% 100%, 0 100%)" },
+    { src: N + "20220615_215358.jpg", left: 66,  top: 78,  width: 15, rot: 3,  z: 1 },
 
     // CENTER
     { src: N + "chris.jpg",           left: 42,  top: 32,  width: 16, rot: -3, z: 3 },
@@ -62,20 +62,11 @@
   // Pre-fill alpha to avoid writing it each frame
   for (let i = 3; i < data.length; i += 4) data[i] = 255;
 
-  let frame = 0;
-  function tick() {
-    // Update grain every 8th frame => ~7.5fps, a much calmer flicker
-    if (frame % 8 === 0) {
-      for (let i = 0; i < data.length; i += 4) {
-        const v = (Math.random() * 255) | 0;
-        data[i] = v;
-        data[i + 1] = v;
-        data[i + 2] = v;
-      }
-      ctx.putImageData(imgData, 0, 0);
-    }
-    frame++;
-    requestAnimationFrame(tick);
+  for (let i = 0; i < data.length; i += 4) {
+    const v = (Math.random() * 255) | 0;
+    data[i] = v;
+    data[i + 1] = v;
+    data[i + 2] = v;
   }
-  requestAnimationFrame(tick);
+  ctx.putImageData(imgData, 0, 0);
 })();
