@@ -30,21 +30,64 @@
     { src: N + "chris.jpg",           left: 42,  top: 32,  width: 16, rot: -3, z: 3 },
   ];
 
+  // Per-slot drift for the montage animation. Chris (last entry) stays static.
+  // Format: [dx0 start-vw, dy0, dx1 end-vw, dy1, duration-s, delay-s]
+  const DRIFT_PATTERN = [
+    // LEFT column — drift rightward
+    [-5,  1,  3, -1, 24,   0  ],
+    [-4, -1,  4,  2, 22,  -3  ],
+    [-5,  1,  3, -1, 26,  -6  ],
+    [-3, -2,  5,  1, 21,  -9  ],
+    // RIGHT column — drift leftward
+    [ 5, -1, -3,  2, 23,  -1.5],
+    [ 4,  1, -5, -2, 25,  -4.5],
+    [ 5, -2, -3,  1, 22,  -7.5],
+    [ 3,  2, -4, -1, 20, -10.5],
+    // TOP band — drift with slight downward
+    [-3, -2,  4,  1, 25,  -2  ],
+    [ 3,  1, -4, -1, 24,  -5  ],
+    [-4,  2,  3, -2, 23,  -8  ],
+    // BOTTOM band — drift with slight upward
+    [ 3, -1, -4,  2, 22,  -3.5],
+    [-4,  1,  3, -1, 26,  -6.5],
+    [ 4, -2, -3,  1, 21,  -9.5],
+  ];
+
   const bg = document.getElementById("collageBg");
   if (bg) {
-    SLOTS.forEach((s) => {
+    SLOTS.forEach((s, i) => {
+      const isChris = i === SLOTS.length - 1;
       const img = document.createElement("img");
       img.className = "collage-img";
       img.src = s.src;
       img.alt = "";
       img.loading = "lazy";
-      img.style.left = s.left + "%";
-      img.style.top = s.top + "%";
-      img.style.width = s.width + "vw";
       img.style.transform = `rotate(${s.rot}deg)`;
-      img.style.zIndex = String(s.z);
       if (s.clip) img.style.clipPath = s.clip;
-      bg.appendChild(img);
+
+      if (isChris) {
+        img.style.left = s.left + "%";
+        img.style.top = s.top + "%";
+        img.style.width = s.width + "vw";
+        img.style.zIndex = String(s.z);
+        bg.appendChild(img);
+      } else {
+        const d = DRIFT_PATTERN[i];
+        const slot = document.createElement("div");
+        slot.className = "collage-slot";
+        slot.style.left = s.left + "%";
+        slot.style.top = s.top + "%";
+        slot.style.width = s.width + "vw";
+        slot.style.zIndex = String(s.z);
+        slot.style.setProperty("--dx0", d[0] + "vw");
+        slot.style.setProperty("--dy0", d[1] + "vw");
+        slot.style.setProperty("--dx1", d[2] + "vw");
+        slot.style.setProperty("--dy1", d[3] + "vw");
+        slot.style.setProperty("--dur", d[4] + "s");
+        slot.style.setProperty("--dly", d[5] + "s");
+        slot.appendChild(img);
+        bg.appendChild(slot);
+      }
     });
 
     // Cartoon sweat drops off Chris's head (he's mid-DDR round)
@@ -60,7 +103,7 @@
     const DROPS = [
       { x: "40%", y: "26%", delay: "0s",   scale: 0.8  }, // upper-left forehead
       { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  }, // upper-right temple
-      { x: "44%", y: "28%", delay: "1.7s"              }, // cheek/jaw
+      { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  }, // cheek/jaw
       { x: "18%", y: "46%", delay: "0.4s", scale: 0.55 }, // elbow
       { x: "12%", y: "56%", delay: "1.3s", scale: 0.55 }, // wrist
     ];

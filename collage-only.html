@@ -33,6 +33,27 @@
       background: #fff;
       padding: 4px 4px 14px 4px;
     }
+
+    /* Montage drift wrapper: each slot cross-fades and slides slowly. */
+    .collage-slot {
+      position: absolute;
+      animation: driftFade var(--dur, 22s) ease-in-out infinite;
+      animation-delay: var(--dly, 0s);
+      will-change: transform, opacity;
+    }
+    .collage-slot > .collage-img {
+      position: static;
+      left: auto;
+      top: auto;
+      width: 100%;
+      display: block;
+    }
+    @keyframes driftFade {
+      0%   { transform: translate(var(--dx0, -4vw), var(--dy0, 0));  opacity: 0; }
+      15%  {                                                         opacity: 1; }
+      85%  {                                                         opacity: 1; }
+      100% { transform: translate(var(--dx1,  4vw), var(--dy1, 0));  opacity: 0; }
+    }
     .collage-vignette {
       position: fixed;
       inset: 0;
