@@ -74,6 +74,20 @@
 
   const bg = document.getElementById("collageBg");
   if (bg) {
+    // Cover-fit stage: 1920x1080 design space scaled to cover the iframe.
+    const stage = document.createElement("div");
+    stage.className = "collage-stage";
+    bg.appendChild(stage);
+
+    const STAGE_W = 1920;
+    const STAGE_H = 1080;
+    function updateStageScale() {
+      const s = Math.max(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H);
+      document.documentElement.style.setProperty("--stage-scale", s);
+    }
+    updateStageScale();
+    window.addEventListener("resize", updateStageScale);
+
     SLOTS.forEach((s, i) => {
       const isChris = i === SLOTS.length - 1;
       const d = DRIFT_PATTERN[i];
@@ -90,12 +104,13 @@
       slot.className = "collage-slot";
       slot.style.left = s.left + "%";
       slot.style.top = s.top + "%";
-      slot.style.width = s.width + "vw";
+      slot.style.width = s.width + "%";
       slot.style.zIndex = String(s.z);
-      slot.style.setProperty("--dx0", d[0] + "vw");
-      slot.style.setProperty("--dy0", d[1] + "vw");
-      slot.style.setProperty("--dx1", d[2] + "vw");
-      slot.style.setProperty("--dy1", d[3] + "vw");
+      // Drift in design pixels (1 unit = 1vw at design 1920 = 19.2px). Stage scale preserves magnitude.
+      slot.style.setProperty("--dx0", (d[0] * 19.2) + "px");
+      slot.style.setProperty("--dy0", (d[1] * 19.2) + "px");
+      slot.style.setProperty("--dx1", (d[2] * 19.2) + "px");
+      slot.style.setProperty("--dy1", (d[3] * 19.2) + "px");
       slot.style.setProperty("--dur", d[4] + "s");
       slot.style.setProperty("--dly", d[5] + "s");
       slot.appendChild(img);
@@ -108,7 +123,7 @@
         sweat.style.left = "0";
         sweat.style.top = "0";
         sweat.style.width = "100%";
-        sweat.style.height = (s.width * 1154 / 866) + "vw";
+        sweat.style.height = "100%";
 
         DROPS.forEach((dp) => {
           const el = document.createElement("div");
@@ -135,7 +150,7 @@
         slot.appendChild(sweat);
       }
 
-      bg.appendChild(slot);
+      stage.appendChild(slot);
     });
   }
 

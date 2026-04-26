@@ -23,6 +23,17 @@
       pointer-events: none;
       z-index: 1;
     }
+    /* Fixed-design stage: 1920x1080 reference, transform-scaled to cover iframe.
+       Slots use % of stage so the composition keeps its proportions at any aspect. */
+    .collage-stage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1920px;
+      height: 1080px;
+      transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+      transform-origin: center;
+    }
     .collage-img {
       position: absolute;
       object-fit: cover;
@@ -86,8 +97,8 @@
       position: absolute;
       left: var(--x, 30%);
       top: var(--y, 20%);
-      width: calc(clamp(12px, 1.3vw, 20px) * var(--scale, 1));
-      height: calc(clamp(18px, 2vw, 30px) * var(--scale, 1));
+      width: calc(20px * var(--scale, 1));
+      height: calc(30px * var(--scale, 1));
       opacity: 0;
       filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.25));
       animation: drip 2.4s cubic-bezier(0.5, 0, 0.75, 0) infinite;
@@ -102,32 +113,32 @@
       0%   { transform: translateY(0) scale(0.4);  opacity: 0; }
       12%  { transform: translateY(2px) scale(0.8); opacity: 0.5; }
       25%  { transform: translateY(6px) scale(1);   opacity: 1; }
-      70%  { transform: translateY(18vh) scale(1);  opacity: 1; }
-      100% { transform: translateY(26vh) scale(1.2); opacity: 0; }
+      70%  { transform: translateY(195px) scale(1); opacity: 1; }
+      100% { transform: translateY(280px) scale(1.2); opacity: 0; }
     }
     @keyframes dripSplash {
       0%   { transform: translateY(0) scale(0.4);                        opacity: 0; }
       10%  { transform: translateY(2px) scale(0.8);                      opacity: 0.5; }
       20%  { transform: translateY(6px) scale(1);                        opacity: 1; }
-      62%  { transform: translateY(18vh) scale(1);                       opacity: 1; }
-      68%  { transform: translateY(18vh) scaleX(2.2) scaleY(0.25);       opacity: 1; }
-      78%  { transform: translateY(18vh) scaleX(1.6) scaleY(0.35);       opacity: 0.6; }
-      100% { transform: translateY(18vh) scaleX(0.9) scaleY(0.15);       opacity: 0; }
+      62%  { transform: translateY(195px) scale(1);                      opacity: 1; }
+      68%  { transform: translateY(195px) scaleX(2.2) scaleY(0.25);      opacity: 1; }
+      78%  { transform: translateY(195px) scaleX(1.6) scaleY(0.35);      opacity: 0.6; }
+      100% { transform: translateY(195px) scaleX(0.9) scaleY(0.15);      opacity: 0; }
     }
 
     .sweat-ripple {
       position: absolute;
       left: var(--x, 30%);
-      top: calc(var(--y, 50%) + 18vh);
-      width: calc(clamp(14px, 1.6vw, 26px) * var(--scale, 1));
-      height: calc(clamp(5px, 0.55vw, 9px) * var(--scale, 1));
+      top: calc(var(--y, 50%) + 195px);
+      width: calc(26px * var(--scale, 1));
+      height: calc(9px * var(--scale, 1));
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.3);
       animation: ripple 2.4s linear infinite;
       animation-delay: var(--delay, 0s);
       pointer-events: none;
-      margin-left: calc(clamp(12px, 1.3vw, 20px) * var(--scale, 1) * 0.5);
-      margin-top: calc(clamp(18px, 2vw, 30px) * var(--scale, 1));
+      margin-left: calc(20px * var(--scale, 1) * 0.5);
+      margin-top: calc(30px * var(--scale, 1));
     }
     @keyframes ripple {
       0%, 60% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
