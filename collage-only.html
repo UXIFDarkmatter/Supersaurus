@@ -97,8 +97,8 @@
       position: absolute;
       left: var(--x, 30%);
       top: var(--y, 20%);
-      width: calc(20px * var(--scale, 1));
-      height: calc(30px * var(--scale, 1));
+      width: calc(15px * var(--scale, 1));
+      height: calc(22px * var(--scale, 1));
       opacity: 0;
       filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.25));
       animation: drip 2.4s cubic-bezier(0.5, 0, 0.75, 0) infinite;
@@ -130,15 +130,15 @@
       position: absolute;
       left: var(--x, 30%);
       top: calc(var(--y, 50%) + 195px);
-      width: calc(26px * var(--scale, 1));
-      height: calc(9px * var(--scale, 1));
+      width: calc(20px * var(--scale, 1));
+      height: calc(7px * var(--scale, 1));
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.3);
       animation: ripple 2.4s linear infinite;
       animation-delay: var(--delay, 0s);
       pointer-events: none;
-      margin-left: calc(20px * var(--scale, 1) * 0.5);
-      margin-top: calc(30px * var(--scale, 1));
+      margin-left: calc(15px * var(--scale, 1) * 0.5);
+      margin-top: calc(22px * var(--scale, 1));
     }
     @keyframes ripple {
       0%, 60% { transform: translate(-50%, -50%) scale(0.3); opacity: 0; }
