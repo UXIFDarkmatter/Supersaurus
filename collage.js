@@ -56,9 +56,9 @@
   ];
 
   const DROPS = [
-    { x: "40%", y: "26%", delay: "0s",   scale: 0.8  },                  // upper-left forehead
-    { x: "48%", y: "24%", delay: "0.9s", scale: 0.8  },                  // upper-right temple
-    { x: "44%", y: "28%", delay: "1.7s", scale: 0.7  },                  // cheek/jaw
+    { x: "40%", y: "26%", delay: "0s",   scale: 0.65 },                  // upper-left forehead
+    { x: "48%", y: "24%", delay: "0.9s", scale: 0.65 },                  // upper-right temple
+    { x: "44%", y: "28%", delay: "1.7s", scale: 0.55 },                  // cheek/jaw
     { x: "18%", y: "46%", delay: "0.4s", scale: 0.55, splash: true },    // elbow → floor
     { x: "12%", y: "56%", delay: "1.3s", scale: 0.55, splash: true },    // wrist → floor
   ];
