@@ -324,6 +324,7 @@ body {
   text-transform: uppercase;
   border-radius: 8px;
   white-space: nowrap;
+  flex-shrink: 0;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
@@ -355,7 +356,7 @@ body {
 
 @media (max-width: 640px) {
   .hero-logo-wrap {
-    width: 58%;
+    width: 80%;
   }
 }
 
