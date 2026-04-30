@@ -297,6 +297,62 @@ body {
   animation: hero-fadein 1s ease-out 4.05s forwards;
 }
 
+.hero-cta-row {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 18px;
+  pointer-events: auto;
+  opacity: 0;
+  animation: hero-fadein 0.55s ease-out 5.15s forwards;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.hero-cta:hover,
+.hero-cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+.hero-cta-icon {
+  width: 22px;
+  height: 22px;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-cta {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+  .hero-cta-icon {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 @media (max-width: 640px) {
   .hero-logo-wrap {
     width: 58%;
@@ -320,6 +376,11 @@ body {
   }
   .hero-logo-wrap::after {
     display: none;
+  }
+  .hero-cta-row {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 
